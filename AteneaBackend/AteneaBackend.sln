@@ -5,6 +5,10 @@ VisualStudioVersion = 17.4.33110.190
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AteneaBackend", "AteneaBackend\AteneaBackend.csproj", "{A0FE0EE8-B9A2-498A-88AA-D10D2603098A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AteneaBackend.Datalayer", "AteneaBackend.Datalayer\AteneaBackend.Datalayer.csproj", "{D9CF76A8-0442-4188-8E80-A8A42414B2B0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AteneaBackend.Businesslayer", "AteneaBackend.Businesslayer\AteneaBackend.Businesslayer.csproj", "{BADF3C9A-0495-45E4-9AF9-3E31DFD3A139}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{A0FE0EE8-B9A2-498A-88AA-D10D2603098A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A0FE0EE8-B9A2-498A-88AA-D10D2603098A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A0FE0EE8-B9A2-498A-88AA-D10D2603098A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D9CF76A8-0442-4188-8E80-A8A42414B2B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9CF76A8-0442-4188-8E80-A8A42414B2B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9CF76A8-0442-4188-8E80-A8A42414B2B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D9CF76A8-0442-4188-8E80-A8A42414B2B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BADF3C9A-0495-45E4-9AF9-3E31DFD3A139}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BADF3C9A-0495-45E4-9AF9-3E31DFD3A139}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BADF3C9A-0495-45E4-9AF9-3E31DFD3A139}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BADF3C9A-0495-45E4-9AF9-3E31DFD3A139}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
