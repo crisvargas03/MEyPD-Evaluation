@@ -38,9 +38,9 @@ namespace AteneaBackend.Controllers
             if (inputModel != null)
             {
                 var result = await _studentService.Create(inputModel);
-                if (result)
+                if (result != null)
                 {
-                    return Ok();
+                    return Created(result.Id.ToString(), result);
                 }
             }
             return BadRequest("Error al crear el Estudiante...");
@@ -52,9 +52,9 @@ namespace AteneaBackend.Controllers
             if (inputModel != null && id != 0)
             {
                 var result = await _studentService.Update(inputModel, id);
-                if (result)
+                if (result != null)
                 {
-                    return Ok("Estudiante editado con Exito!");
+                    return Ok(result);
                 }
             }
             return BadRequest("Error al modificar el Estudiante...");

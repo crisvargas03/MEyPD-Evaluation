@@ -34,20 +34,23 @@ namespace AteneaBackend.Businesslayer.Services
             return null;
         }
 
-        public async Task<bool> Create(StudentInputModel inputModel)
+        public async Task<StudentViewModel> Create(StudentInputModel inputModel)
         {
             if (inputModel != null)
             {
                 var mappedInput = _mapper.Map<Student>(inputModel);
-                await _mainContext.Student.AddAsync(mappedInput);
+                _mainContext.Student.Add(mappedInput);
                 var result = await _mainContext.SaveChangesAsync();
                 if (result >= 1)
-                    return true;
+                {
+                    var newStudent = await GetLast();
+                    return _mapper.Map<StudentViewModel>(newStudent);
+                }
             }
-            return false;
+            return null;
         }
 
-        public async Task<bool> Update(StudentInputModel inputModel, int id)
+        public async Task<StudentViewModel> Update(StudentInputModel inputModel, int id)
         {
             if (id != 0 && inputModel != null)
             {
@@ -60,11 +63,11 @@ namespace AteneaBackend.Businesslayer.Services
                     var result = await _mainContext.SaveChangesAsync();
                     if (result >= 1)
                     {
-                        return true;
+                        return _mapper.Map<StudentViewModel>(studentToEdit);
                     }
                 }
             }
-            return false;
+            return null;
         }
 
         public async Task<bool> Delete(int id)
@@ -86,5 +89,7 @@ namespace AteneaBackend.Businesslayer.Services
             }
             return false;
         }
+
+        private async Task<Student> GetLast() => await _mainContext.Student.OrderByDescending(s => s.Id).FirstOrDefaultAsync();
     }
 }
