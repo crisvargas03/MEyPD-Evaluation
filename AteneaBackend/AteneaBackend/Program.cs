@@ -1,15 +1,17 @@
-using AteneaBackend.Datalayer.Context;
-using Microsoft.EntityFrameworkCore;
+using AteneaBackend.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddDbContext<MainBDContext>(options =>
-{
-    options.UseSqlServer(builder.Configuration.GetConnectionString("MainDB"));
-});
 
+// Add DB Context configuration
+builder.Services.ConfigureDBContext(builder.Configuration);
 
+// Add the dependency injection configuration
+builder.Services.ConfigureInjections();
+
+// Add AutoMapper Configuratio
+builder.Services.ConfigureAutoMapper();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
