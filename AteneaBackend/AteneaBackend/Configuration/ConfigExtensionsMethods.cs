@@ -18,6 +18,7 @@ namespace AteneaBackend.Configuration
         public static void ConfigureInjections(this IServiceCollection services)
         {
             services.AddTransient<IStudentService, StudentService>();
+            services.AddTransient<ISubjectService, SubjectService>();
         }
 
         public static void ConfigureAutoMapper(this IServiceCollection service)
