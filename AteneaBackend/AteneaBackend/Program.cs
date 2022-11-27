@@ -1,7 +1,6 @@
 using AteneaBackend.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
-
 // Add services to the container.
 
 // Add DB Context configuration

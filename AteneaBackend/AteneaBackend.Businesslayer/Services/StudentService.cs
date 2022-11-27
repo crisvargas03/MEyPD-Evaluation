@@ -39,6 +39,9 @@ namespace AteneaBackend.Businesslayer.Services
             if (inputModel != null)
             {
                 var mappedInput = _mapper.Map<Student>(inputModel);
+                //TODO: method for generate carnet number
+                mappedInput.CardnetNumber = "";
+
                 _mainContext.Student.Add(mappedInput);
                 var result = await _mainContext.SaveChangesAsync();
                 if (result >= 1)
