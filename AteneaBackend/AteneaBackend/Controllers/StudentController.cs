@@ -32,6 +32,17 @@ namespace AteneaBackend.Controllers
             return NotFound("Estudiante no encontrado...");
         }
 
+        [HttpGet("by_teacher/{id}")]
+        public async Task<IActionResult> GetByTeacherId(int id)
+        {
+            var students = await _studentService.GetByTeacher(id);
+            if (students != null)
+            {
+                return Ok(students);
+            }
+            return BadRequest("No se encontraron estudiantes con este maestro...");
+        }
+
         [HttpPost("create")]
         public async Task<IActionResult> Insert([FromBody] StudentInputModel inputModel)
         {

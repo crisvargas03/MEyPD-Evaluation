@@ -16,8 +16,8 @@ namespace AteneaBackend.Controllers
             _authService = authService;
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Login(TeacherLoginInputModel creds)
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody]TeacherLoginInputModel creds)
         {
             if (creds != null)
             {
@@ -28,8 +28,8 @@ namespace AteneaBackend.Controllers
             return BadRequest(new { Alerta = "Credenciales incorrectas..." });
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Register(TeacherRegisterInputModel inputModel)
+        [HttpPost("register")]
+        public async Task<IActionResult> Register([FromBody]TeacherRegisterInputModel inputModel)
         {
             if (inputModel != null)
             {
