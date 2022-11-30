@@ -46,8 +46,8 @@ namespace AteneaBackend.Businesslayer.Services
             {
                 var mappedInput = _mapper.Map<Student>(inputModel);
                 //TODO: method for generate carnet number
-                mappedInput.CardnetNumber = "";
-
+                mappedInput.CardnetNumber = "23-" + new Random().Next(1000,9999).ToString();
+                mappedInput.Codition = "NORMAL";
                 _mainContext.Student.Add(mappedInput);
                 var result = await _mainContext.SaveChangesAsync();
                 if (result >= 1)

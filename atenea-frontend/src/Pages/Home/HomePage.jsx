@@ -1,13 +1,11 @@
 import React from "react";
 import Navbar from "../../Components/Navbar";
 import "./homepage.css";
-import { useLocation } from "react-router-dom";
 import { Welcome } from "../../Components/Welcome";
 
 const HomePage = () => {
-  const location = useLocation();
-  // DATA = info del login
-  const { name, lastname, email, id } = location.state.data;
+  const data = JSON.parse(localStorage.getItem("userLoged"));
+  const { name, lastname } = data;
   return (
     <>
       <div className="App" id="top">

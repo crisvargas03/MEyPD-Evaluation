@@ -19,10 +19,6 @@ const Login = () => {
   const [inputs, handleChange] = useForm(initialState);
   const { email, password } = inputs;
 
-  const toHomePage = (data) => {
-    navigate("Home", { state: { data: data } });
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!email.trim()) {
@@ -56,8 +52,8 @@ const Login = () => {
           return;
         }
         setIsLoanding(false);
-
-        toHomePage(response.loginInfo);
+        localStorage.setItem("userLoged", JSON.stringify(response.loginInfo));
+        navigate("Home");
       })
       .catch((error) => {
         Swal.fire({
