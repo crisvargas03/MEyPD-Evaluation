@@ -5,6 +5,7 @@ import Login from "./Pages/Login/Login";
 import HomePage from "./Pages/Home/HomePage";
 import NotFound from "./Pages/NotFound";
 import { StudentList } from "./Pages/Students/StudentList";
+import { StudentForm } from "./Pages/Students/StudentForm";
 
 const App = () => {
   return (
@@ -14,7 +15,7 @@ const App = () => {
           <Route path="/" element={<Login />} />
           <Route path="/Home" element={<HomePage />} />
           <Route path="/Students" element={<StudentList />} />
-
+          <Route path="/Students/Create" element={<StudentForm />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

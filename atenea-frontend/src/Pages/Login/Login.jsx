@@ -19,6 +19,10 @@ const Login = () => {
   const [inputs, handleChange] = useForm(initialState);
   const { email, password } = inputs;
 
+  const toHomePage = (data) => {
+    navigate("Home", { state: { data: data } });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!email.trim()) {
@@ -41,19 +45,28 @@ const Login = () => {
 
     setIsLoanding(true);
 
-    LogIn(inputs).then((response) => {
-      if (!response.status === 200) {
+    LogIn(inputs)
+      .then((response) => {
+        if (!response.status === 200) {
+          setIsLoanding(false);
+          Swal.fire({
+            title: "Favor Verficar sus crendenciales...",
+            icon: "error",
+          });
+          return;
+        }
         setIsLoanding(false);
+
+        toHomePage(response.loginInfo);
+      })
+      .catch((error) => {
         Swal.fire({
-          title: "Favor Verficar sus crendenciales...",
+          title: "Ups! Algo ha salido mal...",
           icon: "error",
         });
+        setIsLoanding(false);
         return;
-      }
-
-      setIsLoanding(false);
-      navigate("Home");
-    });
+      });
   };
 
   if (isLoanding) {
