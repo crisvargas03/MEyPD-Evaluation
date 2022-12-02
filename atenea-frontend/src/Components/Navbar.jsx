@@ -8,7 +8,7 @@ const Navbar = ({ UserName }) => (
         {UserName ? UserName : ""}
       </a>
     </nav>
-    <a href="top" className="btn btn-outline-dark">
+    <a href="/" className="btn btn-outline-dark">
       Cerrar Sesion
     </a>
   </div>

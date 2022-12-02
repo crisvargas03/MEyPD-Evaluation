@@ -2,14 +2,20 @@ import React from "react";
 import Navbar from "../../Components/Navbar";
 import "./homepage.css";
 import { Welcome } from "../../Components/Welcome";
+import { useNavigate } from "react-router";
 
 const HomePage = () => {
-  const data = JSON.parse(localStorage.getItem("userLoged"));
-  const { name, lastname } = data;
+  const navigate = useNavigate();
+  const data = localStorage.getItem("userLoged")
+    ? JSON.parse(localStorage.getItem("userLoged"))
+    : null;
+  if (data === null) {
+    navigate("/");
+  }
   return (
     <>
       <div className="App" id="top">
-        <Navbar UserName={`${name}  ${lastname}`} />
+        <Navbar UserName={`${data.name}  ${data.lastname}`} />
         <Welcome />
       </div>
     </>

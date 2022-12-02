@@ -9,8 +9,8 @@ import { useNavigate } from "react-router";
 
 const Login = () => {
   const initialState = {
-    email: "pmartinez@mail.com",
-    password: "@pm12345",
+    email: "", //? pmartinez@mail.com
+    password: "", //? @pm12345
   };
 
   const [isLoanding, setIsLoanding] = useState(false);
@@ -40,10 +40,13 @@ const Login = () => {
     }
 
     setIsLoanding(true);
-
     LogIn(inputs)
-      .then((response) => {
-        if (!response.status === 200) {
+      .then((data) => {
+        if (data.msg === "Loging Exitoso") {
+          setIsLoanding(false);
+          localStorage.setItem("userLoged", JSON.stringify(data.loginInfo));
+          navigate("Home");
+        } else {
           setIsLoanding(false);
           Swal.fire({
             title: "Favor Verficar sus crendenciales...",
@@ -51,9 +54,6 @@ const Login = () => {
           });
           return;
         }
-        setIsLoanding(false);
-        localStorage.setItem("userLoged", JSON.stringify(response.loginInfo));
-        navigate("Home");
       })
       .catch((error) => {
         Swal.fire({

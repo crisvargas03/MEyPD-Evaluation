@@ -5,6 +5,8 @@ export const Welcome = () => {
   return (
     <div className="pricing-header px-3 py-3 pt-md-5 pd-md-4 mx-auto text-center">
       <h1 className="display-4">Bienvenido</h1>
+      <br />
+      <br />
       <div className="lead">
         <p>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil ullam,
@@ -13,6 +15,10 @@ export const Welcome = () => {
           aspernatur.
         </p>
       </div>
+      <br />
+      <br />
+      <br />
+
       <div className="container">
         <ServiceCards />
       </div>
