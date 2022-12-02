@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { Get } from "../../Utils/StudentsMethods/Get";
 import Navbar from "../../Components/Navbar";
 import { useNavigate } from "react-router";
 import dateFormat from "dateformat";
 import { Delete } from "../../Utils/StudentsMethods/Delete";
 import Swal from "sweetalert2";
 import { FaTrash, FaPencilAlt, FaBook } from "react-icons/fa";
+import { GetByTeacher } from "../../Utils/StudentsMethods/GetByTeacher";
+//import { Get } from "../../Utils/StudentsMethods/Get";
 
 export const StudentList = () => {
   const data = JSON.parse(localStorage.getItem("userLoged"));
 
   const [students, setStudents] = useState([]);
+
   useEffect(() => {
-    Get().then((response) => setStudents(response));
+    GetByTeacher(data.id).then((response) => setStudents(response));
   }, [students]);
 
   const navigate = useNavigate();
@@ -40,6 +42,7 @@ export const StudentList = () => {
           icon: "success",
         });
       })
+
       .catch(() => {
         Swal.fire({
           title: "Ups! Algo ha salido mal...",
@@ -63,8 +66,8 @@ export const StudentList = () => {
           </button>
         </div>
         <div className="mt-5">
-          <table className="table table-striped table-hover">
-            <thead>
+          <table className="table table-striped table-hover text-center">
+            <thead className="">
               <tr>
                 <th>Nombre</th>
                 <th>Fecha de Naciemento</th>
@@ -78,22 +81,22 @@ export const StudentList = () => {
               {students.map((stu) => (
                 <tr onClick={() => handleClickRow(stu.id)} key={stu.id}>
                   <td>{`${stu.name} ${stu.lastname}`}</td>
-                  <td>{dateFormat(stu.birthdate, "dd - mm - yyyy")}</td>
+                  <td>{dateFormat(stu.birthdate, "dd-mm-yyyy")}</td>
                   <td>{stu.cardnetNumber}</td>
                   <td>{stu.gender}</td>
                   <td>{stu.address}</td>
-                  <td>
+                  <td className="text-center">
                     <button className="btn btn-primary m-1">
                       <FaPencilAlt />
+                    </button>
+                    <button className="btn btn-secondary text-white m-1">
+                      <FaBook />
                     </button>
                     <button
                       onClick={() => handleDelete(stu.id)}
                       className="btn btn-danger m-1"
                     >
                       <FaTrash />
-                    </button>
-                    <button className="btn btn-info text-white m-1">
-                      <FaBook />
                     </button>
                   </td>
                 </tr>
