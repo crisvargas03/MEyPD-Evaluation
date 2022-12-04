@@ -86,7 +86,10 @@ export const StudentList = () => {
                   <td>{stu.gender}</td>
                   <td>{stu.address}</td>
                   <td className="text-center">
-                    <button className="btn btn-primary m-1">
+                    <button
+                      onClick={() => navigate(`/students/edit/${stu.id}`)}
+                      className="btn btn-primary m-1"
+                    >
                       <FaPencilAlt />
                     </button>
                     <button className="btn btn-secondary text-white m-1">
