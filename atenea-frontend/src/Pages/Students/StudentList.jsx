@@ -10,20 +10,32 @@ import { GetByTeacher } from "../../Utils/StudentsMethods/GetByTeacher";
 
 export const StudentList = () => {
   const data = JSON.parse(localStorage.getItem("userLoged"));
+  const navigate = useNavigate();
 
   const [students, setStudents] = useState([]);
+  const [filter, setFilter] = useState("");
 
   useEffect(() => {
     GetByTeacher(data.id).then((response) => setStudents(response));
-  }, [students]);
+  }, [data.id, students]);
 
-  const navigate = useNavigate();
+  const studentFiltered = students.filter(
+    (student) =>
+      `${student.name.toLowerCase()} ${student.lastname.toLowerCase()}`.includes(
+        filter
+      ) | student.cardnetNumber.toLowerCase().includes(filter)
+  );
 
   const handleClickRow = (id) => {
-    console.log(
-      "aqui",
-      students.filter((x) => x.id === id)
-    );
+    // console.log(
+    //   "aqui",
+    //   students.filter((x) => x.id === id)
+    // );
+  };
+
+  const handleEdit = (student) => {
+    localStorage.setItem("student", JSON.stringify(student));
+    navigate("Edit");
   };
 
   const handleDelete = (id) => {
@@ -31,7 +43,7 @@ export const StudentList = () => {
       .then((response) => {
         if (!response.status === 200) {
           Swal.fire({
-            title: "Verificar que todos los campos esten correctos...",
+            title: "Ha ocurrido un error",
             icon: "error",
           });
           return;
@@ -55,7 +67,7 @@ export const StudentList = () => {
   return (
     <div>
       <Navbar UserName={`${data.name}  ${data.lastname}`} />
-      <div className="container">
+      <div className="container-fluid">
         <h2>Estudiantes Inscritos!</h2>
         <div>
           <button
@@ -64,8 +76,17 @@ export const StudentList = () => {
           >
             Registar Estudiante
           </button>
+          <div className="mt-3 col-md-12 ">
+            <input
+              type="text"
+              className="form-control"
+              name="filter"
+              onChange={(e) => setFilter(e.target.value.toLowerCase())}
+              placeholder="filtrar..."
+            />
+          </div>
         </div>
-        <div className="mt-5">
+        <div className="mt-3">
           <table className="table table-striped table-hover text-center">
             <thead className="">
               <tr>
@@ -73,21 +94,23 @@ export const StudentList = () => {
                 <th>Fecha de Naciemento</th>
                 <th>Numero de Carnet</th>
                 <th>Genero</th>
+                <th>Condicion</th>
                 <th>Dirrecion</th>
                 <th>Opciones</th>
               </tr>
             </thead>
             <tbody>
-              {students.map((stu) => (
+              {studentFiltered.map((stu) => (
                 <tr onClick={() => handleClickRow(stu.id)} key={stu.id}>
                   <td>{`${stu.name} ${stu.lastname}`}</td>
                   <td>{dateFormat(stu.birthdate, "dd-mm-yyyy")}</td>
                   <td>{stu.cardnetNumber}</td>
                   <td>{stu.gender}</td>
+                  <td>{stu.condition}</td>
                   <td>{stu.address}</td>
                   <td className="text-center">
                     <button
-                      onClick={() => navigate(`/students/edit/${stu.id}`)}
+                      onClick={() => handleEdit(stu)}
                       className="btn btn-primary m-1"
                     >
                       <FaPencilAlt />

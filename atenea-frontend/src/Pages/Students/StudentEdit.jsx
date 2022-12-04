@@ -1,48 +1,33 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useForm } from "../../Hooks/UseForm";
-import { useNavigate, useParams } from "react-router";
+import { useNavigate } from "react-router";
 import Navbar from "../../Components/Navbar";
 import Swal from "sweetalert2";
-import { GetById } from "../../Utils/StudentsMethods/GetById";
 import dateFormat from "dateformat";
 import { Update } from "../../Utils/StudentsMethods/Update";
 
 export const StudentEdit = () => {
   const data = JSON.parse(localStorage.getItem("userLoged"));
-
-  const { id } = useParams();
-  const [student, setStudent] = useState({});
+  const studentToEdit = JSON.parse(localStorage.getItem("student"));
   const navigate = useNavigate();
 
-  useEffect(() => {
-    GetById(id).then((response) => setStudent(response));
-  }, [id]);
-
   const initialState = {
-    id: "",
-    name: "",
-    lastname: "",
-    birthdate: "",
-    phoneNumber: "",
-    gender: "",
-    address: "",
+    id: studentToEdit.id,
+    name: studentToEdit.name,
+    lastname: studentToEdit.lastname,
+    birthdate: dateFormat(studentToEdit.birthdate, "yyyy-mm-dd"),
+    phoneNumber: studentToEdit.phoneNumber,
+    gender: studentToEdit.gender,
+    address: studentToEdit.address,
+    condition: studentToEdit.condition,
     teacherId: data.id,
   };
-  const [inputs, handleChange, reset] = useForm(initialState);
 
+  const [inputs, handleChange] = useForm(initialState);
   const { name, lastname, birthdate, phoneNumber, gender, address } = inputs;
-  inputs.id = student.id;
-  inputs.name = student.name;
-  inputs.lastname = student.lastname;
-  inputs.birthdate = dateFormat(student.birthdate, "yyyy-mm-dd");
-  inputs.phoneNumber = student.phoneNumber;
-  inputs.gender = student.gender;
-  inputs.address = student.address;
-  inputs.teacherId = data.id;
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     Update(inputs)
       .then((response) => {
         if (!response.status === 200) {
@@ -57,7 +42,7 @@ export const StudentEdit = () => {
           title: "Estudiante Modificado Correctamente!",
           icon: "success",
         });
-        reset();
+        handleBack();
       })
       .catch(() => {
         Swal.fire({
@@ -66,6 +51,11 @@ export const StudentEdit = () => {
         });
         return;
       });
+  };
+
+  const handleBack = () => {
+    localStorage.removeItem("student");
+    navigate("/Students");
   };
 
   return (
@@ -89,13 +79,13 @@ export const StudentEdit = () => {
             </div>
 
             <div className="col-md-6">
-              <label htmlFor="lastName" className="form-label">
+              <label htmlFor="lastname" className="form-label">
                 Apellido
               </label>
               <input
                 type="text"
                 className="form-control"
-                name="lastName"
+                name="lastname"
                 value={lastname}
                 onChange={handleChange}
               />
@@ -123,7 +113,7 @@ export const StudentEdit = () => {
                 type="phone"
                 className="form-control"
                 name="phoneNumber"
-                value={phoneNumber}
+                value={phoneNumber === null ? "" : phoneNumber}
                 onChange={handleChange}
               />
             </div>
@@ -165,7 +155,7 @@ export const StudentEdit = () => {
             </div>
             <div className="col-6">
               <button
-                onClick={() => navigate("/Students")}
+                onClick={() => handleBack()}
                 className="btn btn-outline-danger"
               >
                 Cancelar
