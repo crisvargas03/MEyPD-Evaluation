@@ -34,6 +34,7 @@ const ServiceCards = () => {
             <ul className="list-unstyled mt-3 mb-4"></ul>
             <img src={attandance} alt="foto" className="card-img-top pt-1" />
             <button
+              onClick={() => navigate("/attendance")}
               className="btn btn-lg btn-block btn-outline-primary"
               type="button"
             >

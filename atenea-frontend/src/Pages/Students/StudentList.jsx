@@ -99,7 +99,7 @@ export const StudentList = () => {
         </div>
         <div className="mt-3">
           <table className="table table-striped table-hover text-center">
-            <thead className="">
+            <thead className="thead-dark">
               <tr>
                 <th>Nombre</th>
                 <th>Fecha de Naciemento</th>
