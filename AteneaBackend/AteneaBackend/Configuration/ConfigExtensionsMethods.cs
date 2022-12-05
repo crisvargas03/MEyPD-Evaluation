@@ -20,6 +20,7 @@ namespace AteneaBackend.Configuration
             services.AddTransient<IStudentService, StudentService>();
             services.AddTransient<ISubjectService, SubjectService>();
             services.AddTransient<IAuthService, AuthService>();
+            services.AddTransient<IGradesBookService, GradesBookService>();
         }
 
         public static void ConfigureAutoMapper(this IServiceCollection service)

@@ -6,14 +6,14 @@ import { Delete } from "../../Utils/StudentsMethods/Delete";
 import Swal from "sweetalert2";
 import { FaTrash, FaPencilAlt, FaBook } from "react-icons/fa";
 import { GetByTeacher } from "../../Utils/StudentsMethods/GetByTeacher";
-//import { Get } from "../../Utils/StudentsMethods/Get";
+import SubjectModal from "../../Components/Students/SubjectModal";
 
 export const StudentList = () => {
   const data = JSON.parse(localStorage.getItem("userLoged"));
   const navigate = useNavigate();
-
   const [students, setStudents] = useState([]);
   const [filter, setFilter] = useState("");
+  const [modalSubject, setModalSubject] = useState(false);
 
   useEffect(() => {
     GetByTeacher(data.id).then((response) => setStudents(response));
@@ -26,12 +26,7 @@ export const StudentList = () => {
       ) | student.cardnetNumber.toLowerCase().includes(filter)
   );
 
-  const handleClickRow = (id) => {
-    // console.log(
-    //   "aqui",
-    //   students.filter((x) => x.id === id)
-    // );
-  };
+  const [studentData, setStudentData] = useState({});
 
   const handleEdit = (student) => {
     localStorage.setItem("student", JSON.stringify(student));
@@ -64,8 +59,24 @@ export const StudentList = () => {
       });
   };
 
+  function handleModal(event, val) {
+    setModalSubject(val);
+  }
+
+  const selectStudent = (event, op, stu) => {
+    setStudentData(stu);
+    handleModal(event, op);
+  };
+
   return (
     <div>
+      {modalSubject ? (
+        <SubjectModal
+          ModalOpen={modalSubject}
+          StudentData={studentData}
+          CloseModal={(event) => handleModal(event, false)}
+        />
+      ) : null}
       <Navbar UserName={`${data.name}  ${data.lastname}`} />
       <div className="container-fluid">
         <h2>Estudiantes Inscritos!</h2>
@@ -101,7 +112,7 @@ export const StudentList = () => {
             </thead>
             <tbody>
               {studentFiltered.map((stu) => (
-                <tr onClick={() => handleClickRow(stu.id)} key={stu.id}>
+                <tr key={stu.id}>
                   <td>{`${stu.name} ${stu.lastname}`}</td>
                   <td>{dateFormat(stu.birthdate, "dd-mm-yyyy")}</td>
                   <td>{stu.cardnetNumber}</td>
@@ -115,7 +126,10 @@ export const StudentList = () => {
                     >
                       <FaPencilAlt />
                     </button>
-                    <button className="btn btn-secondary text-white m-1">
+                    <button
+                      onClick={(event) => selectStudent(event, true, stu)}
+                      className="btn btn-secondary text-white m-1"
+                    >
                       <FaBook />
                     </button>
                     <button
