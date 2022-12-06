@@ -21,6 +21,7 @@ namespace AteneaBackend.Configuration
             services.AddTransient<ISubjectService, SubjectService>();
             services.AddTransient<IAuthService, AuthService>();
             services.AddTransient<IGradesBookService, GradesBookService>();
+            services.AddTransient<IAttendanceService, AttendanceService>();
         }
 
         public static void ConfigureAutoMapper(this IServiceCollection service)
