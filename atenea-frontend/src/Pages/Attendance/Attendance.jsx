@@ -15,14 +15,27 @@ const Attendance = () => {
     navigate("/");
   }
 
-  const initialState = { studenId: 0, isPresent: true, justification: "" };
+  const [isPresent, setIsPresent] = useState(true);
+  const [justify, setJustify] = useState("");
+  const [studentId, setStudentId] = useState(0);
+  const [attendanceList, setAttanceList] = useState([{}]);
 
   const [students, setStudents] = useState([]);
-
   useEffect(() => {
     GetByTeacher(data.id).then((response) => setStudents(response));
   }, [data.id, students]);
 
+  const handleAttendace = (present, stu) => {
+    const initialState = {
+      studenId: studentId,
+      isPresent: isPresent,
+      justification: justify,
+    };
+    setIsPresent(present);
+    setStudentId(stu);
+    setAttanceList((old) => [...old, initialState]);
+    console.log(attendanceList);
+  };
   return (
     <>
       <div className="App" id="top">
@@ -32,8 +45,8 @@ const Attendance = () => {
             <thead className="thead-dark">
               <tr>
                 <th>Estudiante</th>
-                <th>Asistencia</th>
                 <th>Justificacion</th>
+                <th>Asistencia</th>
               </tr>
             </thead>
             <tbody>
@@ -41,15 +54,27 @@ const Attendance = () => {
                 <tr key={st.id}>
                   <td>{`${st.name} ${st.lastname}`}</td>
                   <td>
-                    <button className="btn btn-success btn-sm m-1">
-                      <AiOutlineCheck />
-                    </button>
-                    <button className="btn btn-danger btn-sm m-1">
-                      <AiOutlineClose />
-                    </button>
+                    <input
+                      type="text"
+                      onChange={(e) => setJustify(e.target.value)}
+                      className="form-control"
+                      name="justification"
+                    />
                   </td>
                   <td>
-                    <input type="text" className="form-control" name="filter" />
+                    <button
+                      onChange={(e) => console.log(e.target.value)}
+                      onClick={() => handleAttendace(true, st.id)}
+                      className="btn btn-success btn-sm m-1"
+                    >
+                      <AiOutlineCheck />
+                    </button>
+                    <button
+                      onClick={() => handleAttendace(false, st.id)}
+                      className="btn btn-danger btn-sm m-1"
+                    >
+                      <AiOutlineClose />
+                    </button>
                   </td>
                 </tr>
               ))}
