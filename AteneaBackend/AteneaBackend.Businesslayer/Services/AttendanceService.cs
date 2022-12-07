@@ -48,5 +48,7 @@ namespace AteneaBackend.Businesslayer.Services
         }
 
         private async Task<Attendance> GetLast() => await _mainContext.Attendance.OrderByDescending(s => s.Id).FirstOrDefaultAsync();
+        public async Task<bool> CheckAttendance(int student) => await _mainContext.Attendance
+            .AnyAsync(at => at.StudentId == student && at.CreationDate.Date == DateTime.Now.Date);
     }
 }

@@ -14,34 +14,27 @@ const Attendance = () => {
   if (data === null) {
     navigate("/");
   }
+  const [check, setCheck] = useState();
   const [students, setStudents] = useState([]);
   useEffect(() => {
     GetByTeacher(data.id).then((response) => setStudents(response));
   }, [data.id]);
 
-  const [check, setCheck] = useState();
-
-  let studentConfirmed = [];
   const handleConfirm = (value, isPresent) => {
-    studentConfirmed.push({ StudentId: value, IsPresent: isPresent });
-    console.log(studentConfirmed);
-  };
-
-  const sendStudent = () => {
-    SaveAttendance(studentConfirmed)
+    SaveAttendance({ StudentId: value, IsPresent: isPresent })
       .then((response) => {
-        console.log(response);
-        if (!response.status === 200) {
+        if (response.status === 400) {
           Swal.fire({
-            title: "Verificar que todos los campos esten correctos...",
-            icon: "error",
+            title: "El estudiante fue confirmado previamente",
+            icon: "warning",
           });
           return;
         }
         Swal.fire({
-          title: "Estudiante Inscrito Correctamente!",
+          title: "Registro Guardado Correctamente!",
           icon: "success",
         });
+        return;
       })
       .catch(() => {
         Swal.fire({
@@ -92,8 +85,11 @@ const Attendance = () => {
               ))}
             </tbody>
           </table>
-          <button className="btn btn-success" onClick={() => sendStudent()}>
-            Enviar pase de Lista
+          <button
+            className="btn btn-success"
+            onClick={() => navigate("report")}
+          >
+            Ver Reporte
           </button>
           <button
             onClick={() => navigate("/Home")}

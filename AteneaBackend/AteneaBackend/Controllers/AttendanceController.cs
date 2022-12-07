@@ -30,20 +30,20 @@ namespace AteneaBackend.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Save([FromBody] List<AttendanceInputModel> attendanceInputModel)
+        public async Task<IActionResult> Save([FromBody] AttendanceInputModel attendanceInputModel)
         {
-            foreach (var item in attendanceInputModel)
+            if (attendanceInputModel != null)
             {
-                if (item != null)
+                var todayPresent = await _attendanceService.CheckAttendance(attendanceInputModel.StudentId);
+                if (!todayPresent)
                 {
-                    var result = await _attendanceService.Save(item);
-                    if (result != null)
-                    {
-                        
-                    }
+                    var registerResult = await _attendanceService.Save(attendanceInputModel);
+                    if (registerResult != null)
+                        return Ok(registerResult);
                 }
+                return BadRequest();
             }
-            return Ok();
+            return BadRequest("Error al realizar el registro...");
         }
     }
 }

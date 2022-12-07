@@ -8,6 +8,7 @@ import { StudentList } from "./Pages/Students/StudentList";
 import { StudentForm } from "./Pages/Students/StudentForm";
 import { StudentEdit } from "./Pages/Students/StudentEdit";
 import Attendance from "./Pages/Attendance/Attendance";
+import Report from "./Pages/Attendance/Report";
 
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
           <Route path="/Students/Create" element={<StudentForm />} />
           <Route path="/Students/Edit" element={<StudentEdit />} />
           <Route path="/Attendance" element={<Attendance />} />
+          <Route path="/Attendance/report" element={<Report />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
