@@ -34,14 +34,20 @@ namespace AteneaBackend.Businesslayer.Services
             return null;
         }
 
+        public async Task<IEnumerable<StudentViewModel>> GetByTeacher(int teacherId)
+        {
+            var students = _mainContext.Student.Where(x => x.TeacherId == teacherId).ProjectTo<StudentViewModel>(_mapper.ConfigurationProvider);
+            return await students.ToListAsync();
+        }
+
         public async Task<StudentViewModel> Create(StudentInputModel inputModel)
         {
             if (inputModel != null)
             {
                 var mappedInput = _mapper.Map<Student>(inputModel);
                 //TODO: method for generate carnet number
-                mappedInput.CardnetNumber = "";
-
+                mappedInput.CardnetNumber = "23-" + new Random().Next(1000,9999).ToString();
+                mappedInput.Condition = "NORMAL";
                 _mainContext.Student.Add(mappedInput);
                 var result = await _mainContext.SaveChangesAsync();
                 if (result >= 1)

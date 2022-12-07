@@ -18,7 +18,7 @@ namespace AteneaBackend.Datalayer.FluentConfig
             builder.Property(x => x.Gender).HasMaxLength(2);
             builder.Property(x => x.CardnetNumber).IsRequired().HasMaxLength(8);
             builder.Property(x => x.TeacherId).IsRequired();
-            builder.Property(x => x.Codition).HasMaxLength(20);
+            builder.Property(x => x.Condition).HasMaxLength(20);
             builder.Property(x => x.PhoneNumber).HasMaxLength(15);
             builder.Property(x => x.Address).HasMaxLength(100);
 

@@ -8,6 +8,7 @@ namespace AteneaBackend.Businesslayer.Interfaces
         Task<bool> Delete(int id);
         Task<IEnumerable<StudentViewModel>> GetAll();
         Task<StudentViewModel> GetById(int code);
+        Task<IEnumerable<StudentViewModel>> GetByTeacher(int teacherId);
         Task<StudentViewModel> Update(StudentInputModel inputModel, int id);
     }
 }
