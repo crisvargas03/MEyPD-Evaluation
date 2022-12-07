@@ -23,18 +23,27 @@ namespace AteneaBackend.Controllers
             return Ok(await _attendanceService.GetAll());
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Save([FromBody] AttendanceInputModel attendanceInputModel)
+        [HttpGet("today")]
+        public async Task<IActionResult> GetStudentId()
         {
-            if (attendanceInputModel != null)
+            return Ok(await _attendanceService.GetTodayId(DateTime.Now));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Save([FromBody] List<AttendanceInputModel> attendanceInputModel)
+        {
+            foreach (var item in attendanceInputModel)
             {
-                var result = await _attendanceService.Save(attendanceInputModel);
-                if (result != null)
+                if (item != null)
                 {
-                    return Created(result.Id.ToString(), result);
+                    var result = await _attendanceService.Save(item);
+                    if (result != null)
+                    {
+                        
+                    }
                 }
             }
-            return BadRequest("Error al guardar el pase de lista...");
+            return Ok();
         }
     }
 }

@@ -145,10 +145,7 @@ export const StudentList = () => {
           </table>
         </div>
         <div className="center">
-          <button
-            onClick={() => navigate("/Home")}
-            className="btn btn-outline-dark"
-          >
+          <button onClick={() => navigate("/Home")} className="btn btn-dark">
             Volver
           </button>
         </div>

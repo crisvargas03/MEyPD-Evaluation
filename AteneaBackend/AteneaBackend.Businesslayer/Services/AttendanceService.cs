@@ -25,6 +25,12 @@ namespace AteneaBackend.Businesslayer.Services
             return await attendances.ToListAsync();
         }
 
+        public async Task<List<int>> GetTodayId(DateTime date)
+        {
+            var ids = await _mainContext.Attendance.Where(x => x.CreationDate.Date == date.Date).Select(x => x.Id).ToListAsync();
+            return ids;
+        } 
+
         public async Task<AttendanceViewModel> Save(AttendanceInputModel inputModel)
         {
             if (inputModel != null)
